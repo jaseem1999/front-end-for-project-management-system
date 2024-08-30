@@ -1,0 +1,110 @@
+<div class="container mt-5">
+    <div class="form-container">
+        <div class="alert alert-success" role="alert" [hidden]="messageHider">
+            {{message}}
+        </div>
+        <h2 class="text-center">Assign Project Manager</h2>
+        <img [src]="profile" class="profile" alt="profile" />
+        <span class="online" [style.background]="cpoDetails.cpo.active === 'active' ? 'green' : 'black'"></span>
+        <p style="justify-content: flex-start;"> {{cpoDetails.name}} <span style="font-size: x-small; color: aqua;">
+        
+                ({{cpoDetails.position}})</span> <span style="color: red;"> system verified</span></p>
+        <form (ngSubmit)="submittedProjectManager()">
+            <div class="row mb-3">
+                <!-- Name -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" [(ngModel)]="formData.name" required>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="formData.email" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- Password -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" [(ngModel)]="formData.password" required>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" class="form-control" id="phone" placeholder="Enter phone number" name="phone" [(ngModel)]="formData.phone" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- Position -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" class="form-control" id="position" placeholder="Enter position" name="position" [(ngModel)]="formData.position" required>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-select" id="status" name="status" [(ngModel)]="formData.status" required>
+                            <option value="" disabled selected>Select status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- Profile Image -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="img">Profile Image</label>
+                        <input type="file" class="form-control" id="img" name="img" (change)="onFileSelectedImage($event)" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- CPO -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="cpo">Chief Production Officer {{cpoDetails.name}} ({{cpoid}})</label>
+                        <input type="number" class="form-control" id="cpo" name="cpo" [(ngModel)]="cpoid">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <!-- Project -->
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="project">Project</label>
+                        <select class="form-select" id="project" name="projectId" [(ngModel)]="formData.projectId" required>
+                            <option *ngFor="let project of projectsArray" [value]="project.tid">{{ project.pname }}</option>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

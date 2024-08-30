@@ -1,0 +1,73 @@
+<div *ngIf="!databaseNull; else datanull">
+    <div *ngIf="projectsArray.length > 0; else noProjects">
+        <div class="container">
+            <div class="row">
+                <div class="col-12" *ngFor="let project of projectsArray" style="margin-top: 20px;">
+                    <div class="bg-dark text-white p-3 mb-4" style="border-radius: 5px;">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img *ngIf="project.img" [src]="project.img" alt="Project Image" class="img-fluid"
+                                    style="height: 180px; object-fit: cover; width: 100%; margin-bottom: 10px;">
+                            </div>
+                            <div class="col-md-8">
+                                <h5>{{ project.pname }}</h5>
+                                <p>{{ project.description }}</p>
+                                <p><strong>Start Date:</strong> {{ project.startdate ? (project.startdate |
+                                    date:'shortDate') : 'N/A' }}</p>
+                                <p><strong>End Date:</strong> {{ project.enddate ? (project.enddate | date:'shortDate')
+                                    : 'N/A' }}</p>
+                                <p><strong>Client:</strong> {{ project.client }}</p>
+                                <p class="mt-2" [ngClass]="{
+                    'bg-danger text-white': project.status === 'not_started',
+                    'bg-primary text-white': project.status === 'in_progress',
+                    'bg-success text-white': project.status === 'completed',
+                    'bg-warning text-dark': project.status === 'on_hold'
+                  }" style="padding: 10px; border-radius: 5px;">
+                                    <strong>Status:</strong> {{ project.status | titlecase }}
+                                </p>
+                                <div class="d-flex align-items-center mt-3">
+                                    <a *ngIf="project.pdf" [href]="project.pdf" class="btn btn-primary me-2"
+                                        download="project.pdf">Download PDF</a>
+                                    <select class="form-select w-auto me-2" [(ngModel)]="project.selectedStatus">
+                                        <option value="" disabled>Status update</option>
+                                        <option value="not_started">Not Started</option>
+                                        <option value="in_progress">In Progress</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="on_hold">On Hold</option>
+                                    </select>
+                                    <button class="btn btn-success"
+                                        (click)="statusUpdate(project.tid, project.selectedStatus)">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+
+    <ng-template #noProjects>
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="spinner-border text-info" role="status" style="width: 200px; height: 200px;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="text-white">
+                <h1 style="margin-left: 20px;"><i class="fa-solid fa-folder" style="padding: 10px;"></i> If project are not created</h1>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<ng-template #datanull>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="text-white">
+            <h1 style="color: red;">No data available in database <i style="margin: 10px;"
+                    class="fa-regular fa-face-sad-tear"></i></h1>
+            <p style="color: rgb(233, 117, 117);">Add Project</p>
+        </div>
+    </div>
+</ng-template>
+

@@ -1,0 +1,74 @@
+<div class="container mt-5" style="width: 128%;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card" style="background-color: #36403d; margin-bottom: 30px;">
+                <div class="card-header" style="background-color: #36403d; color: white;">
+                    <h3 class="text-center">CREATE NEW PROJECT</h3>
+                    <img [src]="profile" class="profile" alt="profile" />
+                    <span class="online" [style.background]="cpoDetails.cpo.active === 'active' ? 'green' : 'black'"></span>
+                    <p style="justify-content: flex-start;"> {{cpoDetails.name}} <span style="font-size: x-small; color: aqua;">
+                        
+                            ({{cpoDetails.position}})</span> <span style="color: red;"> system verified</span></p>
+                </div>
+                <div class="card-body" style=" background-color: #36403d; color: white; ">
+                    <form (ngSubmit)="ngSubmitproject()">
+                        <div class="alert alert-success" role="alert" [hidden]="addSuccess">
+                            Project added successfully
+                        </div>
+                        <div class="row"> 
+                        <div class="col">                     
+                        <div class="mb-3">
+                            <label for="cpo" class="form-label">CPO ID</label>
+                            <input type="text" name="id" class="form-control" id="id" [(ngModel)]="cpoDetails.cpo.id" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="projectName" class="form-label">Project Name</label>
+                            <input type="text" class="form-control" id="projectName" name="projecName" [(ngModel)]="formData.pname" placeholder="Enter project name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Project Description</label>
+                            <textarea class="form-control" id="description" rows="3" name="description" [(ngModel)]="formData.pdescription" placeholder="Enter project description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" [(ngModel)]="formData.startDate">
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">End Date</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate"  [(ngModel)]="formData.endDate">
+                        </div>
+                        </div><div class="col">
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Project Status</label>
+                            <select class="form-select" id="status" name="status"  [(ngModel)]="formData.status">
+                                <option selected>Select status</option>
+                                <option value="not_started">Not Started</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                                <option value="on_hold">On Hold</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="client" class="form-label">Client</label>
+                            <input type="text" class="form-control" id="client" name="client" placeholder="Enter client" [(ngModel)]="formData.client">
+                        </div>
+                        <div class="mb-3">
+                            <label for="profileImage" class="form-label">Profile Image</label>
+                            <input type="file" class="form-control" (change)="onFileSelectedImage($event)" id="profileImage" name="profileImage" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="projectDocuments" class="form-label">Project Documents</label>
+                            <input type="file" class="form-control" id="projectDocuments" (change)="onFileSelectedPdf($event)" name="projectDocumengt"  accept=".pdf" multiple>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Project</button>
+                        </div>
+                        </div>
+
+                    </form>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

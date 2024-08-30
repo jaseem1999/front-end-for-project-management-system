@@ -1,0 +1,84 @@
+<div class="card p-3 mb-3 shadow-sm" style="max-width: 128%; min-width: 126%;">
+    <div class="d-flex justify-content-center align-items-center" *ngIf="isLoading == true; else loadForm">
+    
+        <div class="spinner-border text-info" role="status" style="width: 50px; height: 50px;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    
+    </div>
+    <ng-template #loadForm>
+        <div *ngIf="showAllTeamMembers == true; else no">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Sorry your team not created</strong>
+            </div>
+        </div>
+        <ng-template #no>
+            <div class="team-list">
+                
+            
+                <div class="team-member" *ngFor="let member of teamMembers">
+                    <div class="userstatus" *ngIf="member.status != null" style="margin: 10px;">
+                        <div class="alert alert-danger" role="alert">
+                            <i class="fa-solid fa-shield"></i> blocked
+                        </div>
+                    </div>
+                    <img [src]="member.img || 'assets/default-avatar.png'" alt="Member Image" class="team-member-img">
+                    
+                    <div class="team-member-info">
+                        <h3>{{ member.name }}</h3>
+                        <p class="mb-0"><strong>Position:</strong> <span style="background-color: rgb(16, 201, 238); margin-left: 10px; border-radius: 2px; "><span class="text-muted" style="padding: 15px;">{{ member.position }}</span></span></p>
+                        <p><strong>Email:</strong> <span class="text-muted">{{ member.email }}</span></p>
+                        <p><strong>Phone:</strong> <span class="text-muted">{{ member.phone }}</span></p>
+                        <p [class.active]="member.active === 'true'">
+                            <strong>Active:</strong> ({{ member.active === 'true' ? 'Active' : 'Inactive' }})
+                        </p>
+                        <button class="btn btn-success"  (click)="statusOn(member.tid)">Manage</button>
+                    </div>
+
+                    <div class="team-member-info">
+                        <ng-container *ngIf="profile != ''; else notprofilecpo">
+                            <img [src]="profile" class="rounded-circle border border-light" alt="CPO Profile"
+                                style="width: 40px; height: 40px;">
+                        </ng-container>
+                        <ng-template #notprofilecpo>
+                            <div class="spinner-border spinner-border-sm text-info ms-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </ng-template>
+                        <p><strong>Project Manager:</strong> <span class="text-muted">{{projectManager.name}}</span></p>
+                        <p class="mb-0">Email: <span class="text-muted">{{projectManager.email}}</span></p>
+                        <p class="mb-0">Phone: <span class="text-muted">{{projectManager.phone}}</span></p>
+                        <p class="mb-0">Status: <span class="text-muted">{{projectManager.status}}</span></p>
+                    </div>
+
+                    <div class="team-member-info">
+                        <ng-container *ngIf="projectImage != ''; else notprojectProfile">
+                            <img [src]="projectImage" alt="Project Image" class="img-thumbnail me-3"
+                                style="width: 50px; height: auto;">
+                        </ng-container>
+                        <ng-template #notprojectProfile>
+                            <div class="spinner-border spinner-border-sm text-info ms-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </ng-template>
+                        <p><strong>Project:</strong> <span class="text-muted">{{projectManager.project.pname}}</span></p>
+                        <p><span class="text-muted">{{projectManager.project.description}}</span></p>
+                        <p class="mb-0">
+                            The project is expected to end on <strong>{{ projectManager.project.enddate | date: 'yyyy : MM : d'
+                                }}</strong>.
+                            Current status: <span class="badge bg-primary">{{
+                                projectManager.project.status }}</span>
+                        </p>
+                        
+                    </div>
+                    <div *ngIf="hiddenStatus == true;" class="team-member-info" [hidden]="member.hiddenStatus">
+                        <div class="list-group list-group-flush bg-white subli" >
+                            <button class="btn btn-success" (click)="selectStatus('active', member.tid)">Unblock</button>
+                            <button class="btn btn-danger" style="margin: 10px;" (click)="selectStatus('inactive', member.tid)">Block</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-template>
+</div>

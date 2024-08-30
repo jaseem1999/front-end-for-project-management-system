@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center align-items-center" *ngIf="isLoading == true; else loadForm">
+
+    <div class="spinner-border text-info " role="status" style="width: 50px; height: 50px;">
+        <span class="visually-hidden">Loading...</span>
+        
+    </div>
+    <span style="margin: 10px;">Please wait...</span>
+
+</div>
+<ng-template #loadForm>
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" [hidden]="messageLoginFailed">
+                            <strong>Login Failed</strong> Retry again
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" [hidden]="messageLoginDefault">
+                            <strong>Select position</strong>
+                        </div>
+                        <h3>Login</h3>
+                    </div>
+                    <div class="card-body">
+                        <form (ngSubmit)="onLogin()">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" [(ngModel)]="logins.email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" [(ngModel)]="logins.pasword">
+                            </div>
+                            <div class="mb-3">
+                                <label for="role" class="form-label">Select Role</label>
+                                <select class="form-select" id="role" name="role" [(ngModel)]="typeOfLogin">
+                                    <option selected>Select your role</option>
+                                    <option value="cpo">Chief Poroduction Officer</option>
+                                    <option value="pm">Project Manager</option>
+                                    <option value="sse">Senior Software Developer</option>
+                                    <option value="ssa">Senior Software Architecture</option>
+                                    <option value="jse">Junior Software Developer</option>
+                                    <option value="jsa">Junior Software Architecture</option>
+                                    <option value="tester">Tester</option>
+                                    <option value="intern">Intern</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center">
+                        <small>have nice day</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

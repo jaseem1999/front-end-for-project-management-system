@@ -1,0 +1,57 @@
+<div class="row" style="margin-left: 0px;  width: 100%; background-color: black;">
+    <div class="col-2 bg-dark" style="color: white; min-height: 650px;">
+        <div class="container">
+            <div style="margin: 10px; text-align: center;">
+                <img [src]="profile" class="profile" alt="profile" />
+                <span class="online" [style.background]="cpoDetails.cpo.active === 'active' ? 'green' : 'black'"></span>
+                <p style="justify-content: flex-start;">{{cpoDetails.name}} <span style="font-size: x-small; color: aqua;"> {{cpoDetails.position}}</span></p>
+
+            </div>
+            <div class="lists" style="font-size: 16px;">
+                <ul class="list-group list-group-flush bg-dark text-sm">
+                    <li class="list-group-item bg-dark">
+                        <div (click)="home()">Home</div>
+                    </li>
+                    <li class="list-group-item bg-dark"> <div (click)="showNotifications()"><i class="fa-regular fa-bell"></i> Notifications <i class="fa-solid fa-angles-down"></i></div>
+                        <ul class="list-group list-group-flush bg-dark subli" [hidden]="notificationsshow">
+                            <li class="list-group-item bg-dark">A second item</li>
+                            <li class="list-group-item bg-dark">A third item</li>
+                            <li class="list-group-item bg-dark">A fourth item</li>
+                            <li class="list-group-item bg-dark">And a fifth one</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item bg-dark"><div (click)="showProjectMenu()"><i class="fa-solid fa-folder"></i> Project <i class="fa-solid fa-angles-down"></i></div>
+                        <ul class="list-group list-group-flush bg-dark subli" [hidden]="projectShow">
+                            <li class="list-group-item bg-dark" (click)="addProject()"><i class="fa-solid fa-folder-plus"></i> Project</li>
+                            <li class="list-group-item bg-dark" (click)="addProjectManager()"><i class="fa-solid fa-user-plus"></i> Project Manager</li>
+                            <li class="list-group-item bg-dark"(click)="viewCpoAllProjects()"><i class="fa-regular fa-folder-open"></i> View all projects</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <div (click)="showTask()"><i class="fa-solid fa-clipboard-check"></i> Task</div>
+                    </li>
+                    <li class="list-group-item bg-dark" (click)="addNotification()" ><i class="fa-solid fa-square-plus"></i> Notifications</li>
+                    <li class="list-group-item bg-dark" (click)="inboxProjectManager()"><i class="fa-solid fa-inbox"></i> Project manager</li>
+                    <li class="list-group-item bg-dark" (click)="settings()"><i class="fa-solid fa-gear"></i> Settings </li>
+                    <li class="list-group-item bg-dark" style="color: red;" (click)="logout()">
+                        <div class="alert alert-danger" role="alert" [hidden]="logoutStatus">
+                            <div class="spinner-border spinner-border-sm text-danger ms-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <span style="margin-left: 10px;"> Logouting..</span>
+                        </div>
+                        Logout <i class="fa-solid fa-right-from-bracket"></i>
+                    </li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-8" style="color: white;">
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</div>

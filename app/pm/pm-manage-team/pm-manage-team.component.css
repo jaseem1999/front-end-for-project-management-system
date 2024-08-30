@@ -1,0 +1,43 @@
+.team-list {
+   
+    padding: 20px;
+}
+
+.team-member {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.team-member-img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+.team-member-info {
+    flex: 1;
+}
+
+.team-member-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.team-member-info p {
+    margin: 5px 0;
+    font-size: 0.95rem;
+}
+
+.team-member-info p strong {
+    font-weight: 600;
+}
+
+.team-member-info p.active {
+    color: #28a745;
+    /* Green for active */
+}
+

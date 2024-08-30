@@ -1,0 +1,80 @@
+
+<div class="main" *ngIf="!backendDBManager; else noTable">
+<table style="width: 120%;" *ngIf="pmlist.length > 0; else noTable" border="2">
+    <thead>
+        <tr class="heading">
+            <th scope="col">Project Manager ID</th>
+            <th scope="col">Project Manager</th>
+            <th scope="col"></th>
+            <th scope="col">Email</th>
+            <th scope="col">Project</th>
+            <th></th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Client</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pm of pmlist;">
+            <th scope="row">{{pm.tid}}</th>
+            <td>{{pm.name}}
+                (<span style="color: rgb(4, 255, 0); font-size: smaller;">
+                    {{pm.position}}
+                </span>)
+            </td>
+            <td>
+                <span *ngIf="pm.img != ''">
+                <span class="online" [style.background]="pm.status === 'active' ? 'green' : 'black'"></span>
+                <img style="border: 1px solid white; border-radius: 50%;"  [src]="pm.img" width="50" height="50" alt="">
+                </span>
+            </td>
+            <td>
+                <a style="text-decoration: none;" [href]="'mailto:' + pm.email">{{ pm.email }}</a> <br>
+                <a style="text-decoration: none;" [href]="'tel:'+pm.phone">{{pm.phone}}</a>
+            </td>
+            <td>{{pm.project.pname}}</td>
+            <td><img [src]="pm.project.img" width="70" height="70"></td>
+        
+            <td class="card-text" [ngClass]="{
+                                         'bg-danger text-white': pm.project.status === 'not_started',
+                                         'bg-primary text-white': pm.project.status === 'in_progress',
+                                         'bg-success text-white': pm.project.status === 'completed',
+                                         'bg-warning text-dark': pm.project.status === 'on_hold'
+                                       }" style="padding: auto;">
+                                     {{pm.project.status}}
+            </td>
+
+            <td class="card-text" [ngClass]="{
+                    'bg-danger text-white': checkStartDate(pm.project.startdate) && pm.project.status === 'not_started',
+                    'bg-warning text-dark': checkStartDate(pm.project.startdate) && pm.project.status === 'on_hold',
+                    'bg-primary text-white': !checkStartDate(pm.project.startdate) && pm.project.status === 'in_progress',
+                    'bg-success text-white': !checkStartDate(pm.project.startdate) && pm.project.status === 'completed'
+                }" style="padding: auto;">
+                {{pm.project.startdate | date:'yyyy-MMM-dd'}} - {{pm.project.enddate | date:'yyyy-MMM-dd'}}
+            </td>
+
+            <td>
+                {{pm.project.client}}
+            </td>
+              
+        </tr>
+
+    </tbody>
+</table>
+<ng-template #noTable>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="spinner-border text-info" role="status" style="width: 200px; height: 200px;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+       
+    </div>
+</ng-template>
+</div>
+<ng-template #noTable>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="text-white">
+            <h1 style="color: red;">No data available in database <i style="margin: 10px;" class="fa-regular fa-face-sad-tear"></i></h1>
+            <p style="color: rgb(233, 117, 117);">Add Project Manager</p>
+        </div>
+    </div>
+</ng-template>

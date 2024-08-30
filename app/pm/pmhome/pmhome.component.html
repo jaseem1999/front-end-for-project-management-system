@@ -1,0 +1,126 @@
+<div class="row" style="margin-left: 0px;  width: 100%; background-color: black;">
+    <div class="col-2 bg-dark" style="color: white; min-height: 650px;">
+        <div class="container">
+            <div style="margin: 10px; text-align: center;">
+                <img *ngIf="profile != ''; else notprofile" [src]="profile" class="profile" alt="profile" />
+                <ng-template #notprofile>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="spinner-border text-info" role="status" >
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </ng-template>
+                <span class="online" [style.background]="projectManager.status === 'active' ? 'green' : 'black'"></span>
+                <p style="justify-content: flex-start;">{{projectManager.name}} <span
+                        style="font-size: x-small; color: aqua;"> {{projectManager.position}}</span></p>
+
+            </div>
+
+            <div class="lists" style="font-size: 16px;">
+                <ul class="list-group list-group-flush bg-dark text-sm">
+                    <li (click)="home()" class="list-group-item bg-dark">
+                        <div >Home</div>
+                    </li>
+                    
+                    <li class="list-group-item bg-dark">
+                        <div ><i class="fa-solid fa-people-group"></i> Team </div>
+                        <ul class="list-group list-group-flush bg-dark subli" >
+                            <li (click)="addTeam()" class="list-group-item bg-dark"><i class="fa-solid fa-user-plus"></i> Team member</li>
+                            <li (click)="manageTeam()" class="list-group-item bg-dark"><i class="fa-solid fa-people-roof"></i>
+                                Manage Team</li>
+                            <li (click)="communicateTeam()" class="list-group-item bg-dark"><i class="fa-brands fa-teamspeak"></i>
+                                Team</li>
+                           
+                        </ul>
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <div ><i class="fa-solid fa-clipboard-check"></i> Task</div>
+                        <ul class="list-group list-group-flush bg-dark subli">
+                            
+                            <li (click)="addTask()" class="list-group-item bg-dark"><i class="fa-solid fa-file-circle-plus"></i>
+                                Add task</li>
+                            <li (click)="manageTask()" class="list-group-item bg-dark"><i class="fa-solid fa-list-check"></i>
+                                Manage Task</li>
+                        
+                        </ul>
+                    </li>
+                   
+                    <li (click)="communicateCpo()" class="list-group-item " style="background-color: azure;" [style.background]="cpoOfficer.cpo.active === 'active' ? 'green' : 'azure'">
+                        <img *ngIf="cpoProfile != ''; else notprofilecpo" [src]="cpoProfile" class="profile" alt="profile" style="width: 40px; height: 40px;" />
+                        <ng-template #notprofilecpo>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="spinner-border text-info" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <span style="color: black;">
+                            <i class="fa-brands fa-teamspeak" style="margin-left: -5px;"></i>Speak CPO
+                        </span>
+                    </li>
+                    <li (click)="settings()" class="list-group-item bg-dark" ><i class="fa-solid fa-gear"></i> Settings </li>
+                    <li (click)="logout()" class="list-group-item bg-dark" style="color: red;" >Logout <i
+                            class="fa-solid fa-right-from-bracket"></i></li>
+            
+                </ul>
+            
+            </div>
+            
+        </div>
+    </div>
+    <div class="col-8" style="color: white;">
+        
+            <div  style="background-color: white;">
+                <div class="card p-3 mb-3 shadow-sm" style="max-width: 128%; min-width: 126%;" >
+                    <div class="d-flex align-items-center mb-2">
+                        <ng-container  *ngIf="projectImage != ''; else notprojectProfile">
+                            <img [src]="projectImage" alt="Project Image" class="img-thumbnail me-3" style="width: 50px; height: auto;">
+                        </ng-container>
+                        <ng-template #notprojectProfile>
+                            <div class="spinner-border spinner-border-sm text-info ms-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </ng-template>
+
+                        <div>
+                            <h5 class="mb-0">{{ projectManager.project.pname }}</h5>
+                            <small class="text-muted">Started on {{ projectManager.project.startdate | date: 'yyyy : MM : d' }}</small>
+                        </div>
+
+                        <div style="position: absolute; right: 20px;" [hidden]="logoutUser">
+                            <div class="alert alert-danger" role="alert">
+                                <div class="spinner-border spinner-border-sm text-danger ms-2" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <span style="margin-left: 10px;"> Logouting..</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mb-1">
+                        You are the <strong>{{ projectManager.position }}</strong> assigned by
+                        <ng-container *ngIf="cpoProfile != ''; else notprofilecpo">
+                            <img [src]="cpoProfile" class="rounded-circle border border-light" alt="CPO Profile"
+                                style="width: 40px; height: 40px;">
+                        </ng-container>
+                        <ng-template #notprofilecpo>
+                            <div class="spinner-border spinner-border-sm text-info ms-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </ng-template>
+                        <strong>{{ cpoOfficer.name }}</strong>
+                        (<em>{{ cpoOfficer.position }}</em>)
+                    </p>
+                    <p class="mb-0">
+                        The project is expected to end on <strong>{{ projectManager.project.enddate | date: 'yyyy : MM : d' }}</strong>.
+                        Current status: <span class="badge bg-primary">{{ projectManager.project.status }}</span>
+                    </p>
+                </div>
+
+            </div>
+            
+            <div class="container">
+                <router-outlet></router-outlet>
+            </div>
+    </div>
+
+</div>

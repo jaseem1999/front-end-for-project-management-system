@@ -1,0 +1,89 @@
+<div class="card p-3 mb-3 shadow-sm" style="max-width: 128%; min-width: 126%;">
+    <div class="d-flex align-items-center mb-2">
+        <ng-container *ngIf="projectImage != ''; else notprojectProfile">
+            <img [src]="projectImage" alt="Project Image" class="img-thumbnail me-3" style="width: 50px; height: auto;">
+        </ng-container>
+        <ng-template #notprojectProfile>
+            <div class="spinner-border spinner-border-sm text-info ms-2" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </ng-template>
+
+        <div>
+            <h5 class="mb-0">{{ projectManager.project.pname }} - Add Your Team Members</h5>
+            <small class="text-muted">Started on {{ projectManager.project.startdate | date: 'yyyy : MM : d' }}</small>
+            
+        </div>
+        <div style="margin-left: 30px;">
+            <div [hidden]="alertAdded" class="alert alert-success" role="alert">
+                Team member added successfully
+            </div>
+            <div [hidden]="alertAddedFailure" class="alert alert-danger" role="alert">
+                Team member added failed
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <div class="d-flex justify-content-center align-items-center" *ngIf="isLoading == true; else loadForm">
+            
+            <div class="spinner-border text-info" role="status" style="width: 200px; height: 200px;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            
+        </div>
+        <ng-template #loadForm>
+        <form (ngSubmit)="addTeamMember()">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="memberName" class="form-label">Project Manager Id</label>
+                    <input type="text" class="form-control" id="pmid" name="pmid" [(ngModel)]="projectManager.tid" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label for="memberName" class="form-label">Member Name</label>
+                    <input type="text" class="form-control" id="memberName" name="memberName" [(ngModel)]="formData.name" placeholder="Enter member's name" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="memberEmail" class="form-label">Member Email</label>
+                    <input type="email" class="form-control" id="memberEmail" name="memberEmail" [(ngModel)]="formData.email" placeholder="Enter member's email"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <label for="memberPass" class="form-label">Member password</label>
+                    <input type="password" class="form-control" id="pass" name="pass" [(ngModel)]="formData.password" placeholder="Enter member's password"
+                        required>
+                </div>
+                
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="memberRole" class="form-label">Role</label>
+                    <select class="form-select" id="memberRole" name="memberRole" [(ngModel)]="formData.position" required>
+                        <option selected disabled value="">Choose role...</option>
+                        <option value="Senior Software Developer">Senior Software Developer</option>
+                        <option value="Senior Software Architecture">Senior Software Architecture</option>
+                        <option value="Junior Software Developer">Junior Software Developer</option>
+                        <option value="Junior Software Architecture">Junior Software Architecture</option>
+                        <option value="Tester">Tester</option>
+                        <option value="Intern">Intern</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="memberPhone" class="form-label">Phone Number</label>
+                    <input type="tel" class="form-control" id="memberPhone" name="memberPhone" [(ngModel)]="formData.phone" placeholder="Enter member's phone number"
+                        required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label for="memberImage" class="form-label">Profile Image</label>
+                    <input type="file" class="form-control" id="memberImage" name="img" (change)="onFileSelectedImage($event)" accept="image/*">
+                </div>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success" style="width: 200px;"><i class="fa-solid fa-user-plus"></i></button>
+            </div>
+        </form>
+        </ng-template>
+    </div>
+</div>
