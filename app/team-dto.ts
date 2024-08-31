@@ -8,7 +8,7 @@ export class TeamDTO {
     email: string = "";
     password: string = "";
     phone: number = 0;
-    status: string = "";
+    status: string | null = "";
     active: string = "";
     img: string = ""; 
     pm: ProjectManager | null = null;

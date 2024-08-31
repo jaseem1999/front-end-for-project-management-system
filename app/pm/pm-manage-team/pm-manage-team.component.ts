@@ -57,7 +57,15 @@ export class PMManageTeamComponent implements OnInit {
         }
       );
       this.isLoading = true;
-      this.pms.getTeamByPMId(String(this.projectManager.tid)).subscribe(
+      this.teamGetPM();
+    } else {
+      sessionStorage.clear();
+      this.router.navigate(['']);
+    }
+  }
+
+  teamGetPM(){
+    this.pms.getTeamByPMId(String(this.projectManager.tid)).subscribe(
         (team : TeamDTO[]) => {
          
           if (team === null){
@@ -74,11 +82,6 @@ export class PMManageTeamComponent implements OnInit {
         }
         
       })
-
-    } else {
-      sessionStorage.clear();
-      this.router.navigate(['']);
-    }
   }
 
   statusOn(tid: number): void {
@@ -93,13 +96,37 @@ export class PMManageTeamComponent implements OnInit {
   }
 
   selectStatus(newStatus: string, tid: number): void {
-    
+    if (newStatus === 'active') {
+        this.pms.updateTeamMemberUnBlock(String(tid)).subscribe(data => {
+            if (data != null) {
+                const team = this.teamMembers.find(member => member.tid === tid);
+                if (team) {
+                    team.status = null; 
+                    team.hiddenStatus = true; 
+                }
+            } else {
+                console.log('Unexpected response:', data);
+            }
+        });
+    } else {
+        this.pms.updateTeamMemberBlock(String(tid)).subscribe(data => {
+            if (data != null) {
+                const team = this.teamMembers.find(member => member.tid === tid);
+                if (team) {
+                  team.status = 'blocked'; 
+                  team.hiddenStatus = true; 
+                }
+            } else {
+              console.log('Unexpected response:', data);
+            }
+        });
+    }
+
     this.teamMembers.forEach(member => {
-      if (member.tid === tid) {
-        member.hiddenStatus = true;
-      }
+        if (member.tid === tid) {
+          member.hiddenStatus = true;
+       }
     });
-    
   }
 
 

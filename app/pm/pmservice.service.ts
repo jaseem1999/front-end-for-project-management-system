@@ -33,5 +33,14 @@ export class PMServiceService {
     return this.httpClient.get<TeamDTO[]>(`http://localhost:8080/api/pm/control/team/get/${pmId}`);
   }
 
+  public updateTeamMemberBlock(teamId: string): Observable<string> {
+    return this.httpClient.put(`http://localhost:8080/api/pm/control/team/status/block/${teamId}`, "", { responseType: 'text' });
+  }
+
+  public updateTeamMemberUnBlock(teamId: string): Observable<string> {
+    return this.httpClient.put(`http://localhost:8080/api/pm/control/team/status/unblock/${teamId}`, "", { responseType: 'text' });
+  }
+
+
 
 }

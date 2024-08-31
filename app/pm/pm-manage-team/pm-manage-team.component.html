@@ -9,19 +9,22 @@
     <ng-template #loadForm>
         <div *ngIf="showAllTeamMembers == true; else no">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Sorry your team not created</strong>
+                <strong>Sorry your team members not yet created. Please create</strong>
             </div>
         </div>
         <ng-template #no>
             <div class="team-list">
                 
-            
-                <div class="team-member" *ngFor="let member of teamMembers">
-                    <div class="userstatus" *ngIf="member.status != null" style="margin: 10px;">
-                        <div class="alert alert-danger" role="alert">
-                            <i class="fa-solid fa-shield"></i> blocked
-                        </div>
+            <div  *ngFor="let member of teamMembers">
+                <div class="userstatus" *ngIf="member.status != null" style="margin: 10px;">
+                    <div class="alert alert-danger" role="alert">
+                        <p>{{member.status}}</p>
+                        <i style="margin: 5px;" class="fa-solid fa-shield"></i>You blocked {{member.name}} <span style="color: rgb(35, 74, 230);">({{member.position}})</span>
+                        <div style="justify-content: end;"><button class="btn btn-primary" (click)="selectStatus('active', member.tid)" style="margin: 5px;">Unblock</button></div>
                     </div>
+                </div>
+                <div class="team-member">
+                    
                     <img [src]="member.img || 'assets/default-avatar.png'" alt="Member Image" class="team-member-img">
                     
                     <div class="team-member-info">
@@ -78,6 +81,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </ng-template>
     </ng-template>

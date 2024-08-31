@@ -50,14 +50,17 @@ export class LoginComponent implements OnInit {
           this.isLoading = false;
           this.cpoDetails = data;
           if(this.cpoDetails === null){
-            this.messageLoginFailed = false;  
+            this.messageLoginFailed = false; 
+            this.isLoading = false;
           }else{
+            this.messageLoginDefault = false;
             this.messageLoginFailed = true; 
             sessionStorage.setItem('cpoDetails', JSON.stringify(this.cpoDetails));
             this.router.navigate(["/cpo/home/main"])
           }
          
         }, (error) => {
+          this.messageLoginDefault = false;
           this.isLoading = false;
           console.error('Login failed:', error);
         });
@@ -67,7 +70,10 @@ export class LoginComponent implements OnInit {
                    
         if(data == null){
           this.messageLoginFailed = false;
+          this.isLoading = false;
         }else{
+          this.isLoading = false;
+          this.messageLoginDefault = false;
           this.projectManager.tid = data.tid;
           this.projectManager.email = data.email;
           this.projectManager.name = data.name;
@@ -78,6 +84,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/pm/home/main']);
         }
       }, err => {
+        this.isLoading = true;
         console.log(err);
       });
     }else if (this.typeOfLogin === 'sse'){
